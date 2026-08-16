@@ -1,0 +1,25 @@
+﻿# Node
+node_modules/
+.next/
+out/
+
+# C# / .NET
+bin/
+obj/
+*.user
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unrelated files/folders
+c++/
+مسودة/
+ali.slnx
+sai.cbp
+sai.layout
+.vs/
