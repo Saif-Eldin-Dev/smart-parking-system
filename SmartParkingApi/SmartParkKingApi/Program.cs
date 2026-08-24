@@ -36,7 +36,25 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// إظهار Swagger في بيئة الإنتاج أيضاً للتمكن من تجربة الـ API من المتصفح
+// ==========================================
+// مكان إضافة الخيار الثالث: بعد builder.Build() مباشرةً
+// ==========================================
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "حدث خطأ أثناء تطبيق الـ Database Migrations.");
+    }
+}
+// ==========================================
+
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
